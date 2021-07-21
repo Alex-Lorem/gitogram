@@ -4,7 +4,7 @@
 
 <script>
 import { feeds } from './pages/feeds'
-
+//App
 export default {
   name: 'App',
   components: {
