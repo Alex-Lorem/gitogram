@@ -1,0 +1,33 @@
+.icon{
+  color: #262626;
+  cursor: pointer;
+}
+.home{
+  width: 25px;
+  height: 25px;
+}
+.exit{
+  width: 25px;
+  height: 20px;
+}
+.icons__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 135px;
+}
+.stories{
+  display: flex;
+  justify-content: space-between;
+}
+h1{
+  cursor: pointer;
+}
+.container {
+
+}
+.postItem--wrapper {
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+}

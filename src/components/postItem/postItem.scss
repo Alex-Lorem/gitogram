@@ -1,0 +1,91 @@
+.c-post-item{
+  display: flex;
+  flex-direction: column;
+}
+.avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.user--wrapper{
+  width: 110px;
+  display: inline-flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+.username{
+  font-weight: 700;
+  font-size: 18px;
+  align-self: center;
+}
+.user__content{
+  width: 100%;
+  border: 1px solid #F1F1F1;
+  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  min-height: 170px;
+  padding: 25px 20px;
+}
+.subtitle{
+  font-weight: 700;
+  line-height: 22px;
+  margin-top: 15px;
+}
+.tools{
+  display: flex;
+  width: 240px;
+  overflow: hidden;
+  border: 1px #aaa9a9 solid;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+.tool__item{
+  border-right: 1px grey solid;
+  padding: 5px 0;
+  text-align: center;
+  cursor: pointer;
+  color: #24292E;
+  box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12), inset 0px 1px 0px rgba(27, 31, 35, 0.12);
+}
+.star{
+  flex: 0.325;
+  background: #FAFBFC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.star-svg{
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  color: #586069;
+}
+.likes{
+  flex: 0.25;
+}
+.fork{
+  flex: 0.325;
+  background: #FAFBFC;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fork-svg{
+  color: #586069;
+  width: 16px;
+  height: 18px;
+  margin-right: 5px;
+
+}
+.forums{
+  flex: 0.1;
+  border: none;
+}
+.data{
+  margin-top: 15px;
+  color:  #00000066;
+  line-height: 14px;
+}

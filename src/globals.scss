@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Regular.woff2') format('woff2'),
+  url('./fonts/Inter-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+$tablets:768px;
+$phones:480px;
+$slippers:330px;
+$baseFamily: "Inter";
+$baseFont: 15px;
+$baseColor: #262626;
+
+@mixin phones {
+  @media screen and (max-width:$phones){
+    @content;
+  }
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+html{
+  font-size: $baseFont;
+  font-family: $baseFamily, "sans-serif";
+  color: $baseColor;
+  overflow-x: hidden;
+
+  @include phones{
+    font-size: $baseFont - 1px;
+  }
+}
+li{
+  list-style-type: none;
+}
+h1{
+  font-weight: 900;
+  font-size: 34px;
+}
+h2{
+  font-weight: 700;
+  font-size: 26px;
+}
+img{
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+}
+.wrapper{
+  overflow: hidden;
+}
+.x-container{
+  width: 1200px;
+  margin: 0 auto;
+}
+button{
+  outline: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Inter";
+}
