@@ -1,21 +1,24 @@
 <template>
   <button class="c-story-item" @click="$emit('onPress')">
-    <div class="avatar">
-      <img :src="avatar" alt="user avatar" class="img">
-    </div>
-    <div class="username">{{username}}</div>
+    <button class="avatar">
+      <avatar
+      :user="user"
+      :is-large="true"
+      />
+    </button>
+    <div class="username">{{user.username}}</div>
   </button>
 </template>
 
 <script>
+import avatar from '../avatar'
 export default {
+  components: {
+    avatar
+  },
   props: {
-    avatar: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
+    user: {
+      type: Object,
       required: true
     }
   }

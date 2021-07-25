@@ -3,8 +3,7 @@
 </template>
 
 <script>
-import { feeds } from './pages/feeds'
-//App
+import feeds from './pages/feeds'
 export default {
   name: 'App',
   components: {

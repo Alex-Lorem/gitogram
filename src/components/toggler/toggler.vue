@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { icon } from '../../icons/index.js'
+import icon from '../icon/index.js'
 export default {
   name: 'toggler',
   components: { icon },

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import * as icons from './variations/index.js'
+import * as icons from './variations'
 
 export default {
   name: 'icon',

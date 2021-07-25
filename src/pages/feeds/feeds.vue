@@ -3,27 +3,19 @@
     <topline>
       <template #headline>
         <h1> Gitogram /</h1>
-        <div class="icons__wrapper">
-        <div class="icon home">
-          <icon name="home"/>
-        </div>
-          <account v-for="photo in accountPhoto"
-                   :key="photo.id"
-                   @onPress="handlePress(story.id)"
-                   :account="photo.account"
-                    />
-          <div class="icon exit">
-            <icon name="exit"/>
-          </div>
-        </div>
+        <userControls
+          v-for="user in account"
+          :user="user"
+          :key="user.id"
+          @onPress="handlePress(user.id)"
+        />
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="story in stories" :key="story.id">
+          <li class="stories-item" v-for="user in stories" :key="user.id">
             <story-item
-              :avatar="story.avatar"
-              :username="story.username"
-              @onPress="handlePress(story.id)"
+              :user="user"
+              @onPress="handlePress(user.id)"
             />
           </li>
         </ul>
@@ -35,28 +27,30 @@
       <postItem
         :user="user"
       />
-
     </div>
   </div>
+  <div>
+    <storiesSlider />
+  </div>
+
 </template>
 
 <script>
-import { topline } from '../../components/topline/topline'
-import { icon } from '../../icons'
-import { storyItem } from '../../components/storyItem/storyItem'
-import { postItem } from '../../components/postItem/postItem'
-import { account } from '../../components/account/account'
+import topline from '../../components/topline'
+import storyItem from '../../components/storyItem'
+import postItem from '../../components/postItem'
+import storiesSlider from '../../components/storiesSlider'
 import stories from './data.json'
-import accountPhoto from './username.json'
-
+import userControls from '../../components/userControls'
+import account from './username.json'
 export default {
   name: 'feeds',
   components: {
     topline,
-    icon,
     storyItem,
-    account,
-    postItem
+    postItem,
+    storiesSlider,
+    userControls
   },
   methods: {
     toggle (isOpened) {
@@ -66,7 +60,7 @@ export default {
   data () {
     return {
       stories,
-      accountPhoto,
+      account,
       shown: false
     }
   }

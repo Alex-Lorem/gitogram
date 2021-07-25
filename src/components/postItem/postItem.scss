@@ -33,59 +33,12 @@
   line-height: 22px;
   margin-top: 15px;
 }
-.tools{
-  display: flex;
-  width: 240px;
-  overflow: hidden;
-  border: 1px #aaa9a9 solid;
-  border-radius: 5px;
-  margin-top: 30px;
-}
-.tool__item{
-  border-right: 1px grey solid;
-  padding: 5px 0;
-  text-align: center;
-  cursor: pointer;
-  color: #24292E;
-  box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12), inset 0px 1px 0px rgba(27, 31, 35, 0.12);
-}
-.star{
-  flex: 0.325;
-  background: #FAFBFC;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.star-svg{
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  color: #586069;
-}
-.likes{
-  flex: 0.25;
-}
-.fork{
-  flex: 0.325;
-  background: #FAFBFC;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.fork-svg{
-  color: #586069;
-  width: 16px;
-  height: 18px;
-  margin-right: 5px;
 
-}
-.forums{
-  flex: 0.1;
-  border: none;
-}
 .data{
   margin-top: 15px;
   color:  #00000066;
   line-height: 14px;
+}
+.tools--wrapper{
+  margin-top: 30px;
 }

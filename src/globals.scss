@@ -1,25 +1,9 @@
-@font-face {
-  font-family: 'Inter';
-  src: url('./fonts/Inter-Regular.woff2') format('woff2'),
-  url('./fonts/Inter-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import 'assets/scss/fonts.scss';
 
 
-$tablets:768px;
-$phones:480px;
-$slippers:330px;
-$baseFamily: "Inter";
-$baseFont: 15px;
-$baseColor: #262626;
 
-@mixin phones {
-  @media screen and (max-width:$phones){
-    @content;
-  }
-}
+
+
 
 *{
   margin: 0;
@@ -67,4 +51,7 @@ button{
   background: transparent;
   cursor: pointer;
   font-family: "Inter";
+}
+.icon{
+  cursor: pointer;
 }

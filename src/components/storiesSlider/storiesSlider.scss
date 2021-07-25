@@ -1,0 +1,24 @@
+.slider--wrapper{
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: #101010;
+  display: none;
+  align-items: center;
+  flex-direction: column;
+}
+.slider{
+  display: flex;
+}
+.slider-item{
+  width: 375px;
+  height: 670px;
+  margin-left: 40px;
+}
+.slider__headline{
+  display: flex;
+  justify-content: space-between;
+}
+
