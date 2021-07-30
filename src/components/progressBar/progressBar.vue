@@ -1,6 +1,6 @@
 <template>
   <div class="progress">
-      asdsad
+    eded
   </div>
 </template>
 
