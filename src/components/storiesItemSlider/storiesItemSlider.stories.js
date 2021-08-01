@@ -3,8 +3,7 @@ import data from '../../pages/feeds/data.json'
 export default {
   title: 'storiesItemSlider',
   component: { storiesItemSlider },
-  argTypes: {
-  }
+  argTypes: {}
 }
 
 const template = () => ({
