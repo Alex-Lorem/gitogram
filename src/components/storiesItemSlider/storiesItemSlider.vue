@@ -1,34 +1,44 @@
 <template>
-  <div class="slider-item">
-    <div class="user--wrapper">
-      <div class="avatar">
-        <img :src="avatar" alt="user avatar" class="img">
-      </div>
-      <div class="username">{{ username }}</div>
+  <div class="c-slider-item">
+    <div class="slider-item-header">
+    <div class="progressBar--wrapper">
+      <progressBar />
     </div>
-    <button class="follow">follow</button>
+    <div class="user--wrapper">
+      <avatar-user :user="user" :is-mega-small="true" />
+    </div>
+    </div>
+    <div class="content">
+     <div class="img--wrapper">
+       <img :src="user.picture" alt="user img" class="img">
+     </div>
+      <div class="text">{{user.storiesText}}</div>
+    </div>
+    <div class="follow--wrapper">
+      <follow />
+    </div>
   </div>
 </template>
 
 <script>
 
+import progressBar from '../progressBar'
+import follow from '../follow'
+import avatarUser from '../avatar-user/avatar-user.vue'
+
 export default {
   name: 'StoriesItem',
+  components: {
+    follow,
+    progressBar,
+    avatarUser
+  },
   props: {
-    avatar: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
-    },
-    storiesText: {
-      type: String,
+    user: {
+      type: Object,
       required: true
     }
   }
-
 }
 </script>
 

@@ -30,7 +30,7 @@
     </div>
   </div>
   <div>
-    <storiesSlider />
+      <storiesSlider v-for="user in 1" :user="user" :key="user.id"/>
   </div>
 
 </template>
@@ -43,8 +43,13 @@ import storiesSlider from '../../components/storiesSlider'
 import stories from './data.json'
 import userControls from '../../components/userControls'
 import account from './username.json'
+import * as api from '../../api'
+
 export default {
   name: 'feeds',
+  props: {
+
+  },
   components: {
     topline,
     storyItem,
@@ -63,6 +68,9 @@ export default {
       account,
       shown: false
     }
+  },
+  created () {
+    api.trandings.getTrendings()
   }
 }
 </script>

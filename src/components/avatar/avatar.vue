@@ -1,4 +1,7 @@
 <template>
+  <div class="avatar mega-small" v-if="isMegaSmall">
+    <img :src="user.avatar" alt="user avatar" class="img">
+  </div>
   <div class="avatar extra-small" v-if="isExtraSmall">
     <img :src="user.avatar" alt="user avatar" class="img">
   </div>
@@ -20,6 +23,9 @@
 export default {
   name: 'avatar',
   props: {
+    isMegaSmall: {
+      type: Boolean
+    },
     isExtraSmall: {
       type: Boolean
     },

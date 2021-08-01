@@ -1,15 +1,14 @@
 <template>
-  <div class="progress">
-    eded
+  <div class="progressBar">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'progress'
+  name: 'progressBar'
 }
 </script>
 
-<style scoped>
+<style lang="scss" src="./progressBar.scss" scoped>
 
 </style>
