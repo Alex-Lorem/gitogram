@@ -70,7 +70,7 @@ export default {
     }
   },
   created () {
-    api.trandings.getTrendings()
+    api.trendings.getTrendings()
   }
 }
 </script>

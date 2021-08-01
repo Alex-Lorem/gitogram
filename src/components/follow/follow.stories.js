@@ -1,13 +1,8 @@
 import button from './follow.vue'
 export default {
   title: 'button',
-  component: { button },
-  argTypes: {
-    unfollowed: {
-      control: { type: 'boolean' }
-    }
+  component: { button }
   }
-}
 
 const template = (args) => ({
   components: { xButton: button },
@@ -19,7 +14,3 @@ const template = (args) => ({
   `
 })
 export const Default = template.bind({})
-
-Default.args = {
-  unfollowed: 'true'
-}
