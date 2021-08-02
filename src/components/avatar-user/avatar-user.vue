@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <avatar :user="user" :is-mega-small="isMegaSmall" :is-small="isSmall"/>
+    <avatar :avatar="avatar" :is-mega-small="isMegaSmall" :is-small="isSmall"/>
     <div class="user">
-      {{ user.username }}
+      {{ username }}
     </div>
 
   </div>
@@ -16,8 +16,12 @@ export default {
     avatar
   },
   props: {
-    user: {
-      type: Object,
+    avatar: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
       required: true
     },
     isMegaSmall: {

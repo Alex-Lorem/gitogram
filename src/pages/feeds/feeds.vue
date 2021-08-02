@@ -12,10 +12,10 @@
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="user in stories" :key="user.id">
+          <li class="stories-item" v-for="item in items" :key="item.id">
             <story-item
-              :user="user"
-              @onPress="handlePress(user.id)"
+              v-bind="getStoryData(item)"
+              @onPress="handlePress(item.id)"
             />
           </li>
         </ul>
@@ -23,16 +23,15 @@
     </topline>
   </div>
   <div class="container">
-    <div class="postItem--wrapper" v-for="user in stories" :key="user.id">
+    <div class="postItem--wrapper" v-for="item in items" :key="item.id">
       <postItem
-        :user="user"
+        v-bind="getPostData(item)"
       />
     </div>
   </div>
   <div>
-      <storiesSlider v-for="user in 1" :user="user" :key="user.id"/>
+      <storiesSlider />
   </div>
-
 </template>
 
 <script>
@@ -47,9 +46,6 @@ import * as api from '../../api'
 
 export default {
   name: 'feeds',
-  props: {
-
-  },
   components: {
     topline,
     storyItem,
@@ -60,17 +56,41 @@ export default {
   methods: {
     toggle (isOpened) {
       this.shown = isOpened
+    },
+    getStoryData (item) {
+      return {
+        username: item.owner.login,
+        avatar: item.owner.avatar_url
+      }
+    },
+    getPostData (item) {
+      return {
+        avatar: item.owner.avatar_url,
+        username: item.owner.login,
+        title: item.name,
+        description: item.description,
+        data: item.pushed_at,
+        forks_count: item.forks_count,
+        watchers_count: item.watchers_count,
+        comments_url: item.comments_url
+      }
     }
   },
   data () {
     return {
+      items: [],
       stories,
       account,
       shown: false
     }
   },
-  created () {
-    api.trendings.getTrendings()
+  async created () {
+    try {
+      const { data } = await api.trendings.getTrendings()
+      this.items = data.items
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 </script>

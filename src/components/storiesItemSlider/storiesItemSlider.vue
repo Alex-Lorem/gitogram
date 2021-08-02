@@ -5,14 +5,14 @@
       <progressBar />
     </div>
     <div class="user--wrapper">
-      <avatar-user :user="user" :is-mega-small="true" />
+      <avatar-user :avatar="avatar" :username="username" :is-mega-small="true" />
     </div>
     </div>
     <div class="content">
      <div class="img--wrapper">
-       <img :src="user.picture" alt="user img" class="img">
+       <img :src="dsds" alt="user img" class="img">
      </div>
-      <div class="text">{{user.storiesText}}</div>
+      <div class="text">{{description}}</div>
     </div>
     <div class="follow--wrapper">
       <follow />
@@ -34,8 +34,16 @@ export default {
     avatarUser
   },
   props: {
-    user: {
-      type: Object,
+    username: {
+      type: String,
+      required: true
+    },
+    avatar: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
       required: true
     }
   }

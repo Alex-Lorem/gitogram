@@ -1,18 +1,17 @@
 <template>
   <div class="c-post-item" @click="$emit('onPress')">
     <div class="user--wrapper">
-      <avatar :user="user" :is-small="true" />
-      <div class="username">{{user.username}}</div>
+      <avatar-user :avatar="avatar" :username="username" :is-small="true" />
     </div>
     <div class="user__content">
-      <h2>{{user.title}}</h2>
-      <div class="subtitle">{{user.subtitle}}</div>
+      <h2>{{title}}</h2>
+      <div class="subtitle">{{description}}</div>
       <div class="tools--wrapper">
-        <postTools :user="user"/>
+        <postTools :forks_count="forks_count" :watchers_count="watchers_count"/>
       </div>
     </div>
-    <toggleComment :user="user"/>
-    <div class="data">{{user.data}}</div>
+    <toggleComment :comments_url="comments_url"/>
+    <div class="data">{{data}}</div>
   </div>
 
 </template>
@@ -20,16 +19,45 @@
 <script>
 import toggleComment from '../toggle-comment/toggle-comment.vue'
 import postTools from '../postTools'
-import avatar from '../avatar'
+import avatarUser from '../avatar-user/avatar-user.vue'
+
 export default {
   components: {
     toggleComment,
     postTools,
-    avatar
+    avatarUser
   },
   props: {
-    user: {
-      type: Object,
+    avatar: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    data: {
+      type: String,
+      required: true
+    },
+    forks_count: {
+      type: Number,
+      required: true
+    },
+    watchers_count: {
+      type: Number,
+      required: true
+    },
+    comments_url: {
+      type: String,
       required: true
     }
   }

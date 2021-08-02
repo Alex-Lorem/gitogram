@@ -1,9 +1,9 @@
 <template>
   <div class="tools">
     <div class="star tool__item"><icon class="star-svg" name="star"/>Star</div>
-    <div class="likes tool__item">{{user.likes}}</div>
+    <div class="likes tool__item">{{watchers_count}}</div>
     <div class="fork tool__item"><icon class="fork-svg" name="fork"/>Fork</div>
-    <div class="forums tool__item">{{user.forums}}</div>
+    <div class="forums tool__item">{{forks_count}}</div>
   </div>
 </template>
 
@@ -16,8 +16,12 @@ export default {
     icon
   },
   props: {
-    user: {
-      type: Object,
+    forks_count: {
+      type: Number,
+      required: true
+    },
+    watchers_count: {
+      type: Number,
       required: true
     }
   }

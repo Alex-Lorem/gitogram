@@ -2,11 +2,11 @@
   <button class="c-story-item" @click="$emit('onPress')">
     <button class="avatar">
       <avatar
-      :user="user"
-      :is-large="true"
+        :avatar="avatar"
+        :is-large="true"
       />
     </button>
-    <div class="username">{{user.username}}</div>
+    <div class="username">{{username}}</div>
   </button>
 </template>
 
@@ -17,8 +17,12 @@ export default {
     avatar
   },
   props: {
-    user: {
-      type: Object,
+    username: {
+      type: String,
+      required: true
+    },
+    avatar: {
+      type: String,
       required: true
     }
   }
