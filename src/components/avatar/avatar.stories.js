@@ -36,7 +36,7 @@ const template = (args) => ({
     }
   },
   template: `
-    <x-avatar :user="user"
+    <x-avatar :avatar="user.avatar"
               :is-mega-small="isMegaSmall"
               :is-extra-small="isExtraSmall"
               :is-small="isSmall"

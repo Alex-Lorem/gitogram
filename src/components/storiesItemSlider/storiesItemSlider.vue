@@ -10,7 +10,7 @@
     </div>
     <div class="content">
      <div class="img--wrapper">
-       <img :src="dsds" alt="user img" class="img">
+       <img :src="picture" alt="user img" class="img">
      </div>
       <div class="text">{{description}}</div>
     </div>
@@ -43,6 +43,10 @@ export default {
       required: true
     },
     description: {
+      type: String,
+      required: true
+    },
+    picture: {
       type: String,
       required: true
     }
