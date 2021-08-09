@@ -9,11 +9,14 @@
     </div>
     </div>
     <div class="content">
-     <div class="img--wrapper">
-       <img :src="picture" alt="user img" class="img">
-     </div>
-      <div class="text">{{description}}</div>
+        <div class="info" v-if="false">
+          <placeholder/>
+        </div>
+      <div v-if="true">
+        <slot name="content"></slot>
+      </div>
     </div>
+
     <div class="follow--wrapper">
       <follow />
     </div>
@@ -25,13 +28,15 @@
 import progressBar from '../progressBar'
 import follow from '../follow'
 import avatarUser from '../avatar-user/avatar-user.vue'
+import placeholder from '../placeholder'
 
 export default {
   name: 'StoriesItem',
   components: {
     follow,
     progressBar,
-    avatarUser
+    avatarUser,
+    placeholder
   },
   props: {
     username: {
@@ -49,6 +54,9 @@ export default {
     picture: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean
     }
   }
 }

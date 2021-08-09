@@ -2,7 +2,7 @@
   <div class="topline">
     <topline>
       <template #headline>
-        <h1> Gitogram /</h1>
+        <h1 @click="trigger"> Gitogram /</h1>
         <userControls
           v-for="user in account"
           :user="user"
@@ -15,7 +15,7 @@
           <li class="stories-item" v-for="item in items" :key="item.id">
             <story-item
               v-bind="getStoryData(item)"
-              @onPress="handlePress(item.id)"
+              @click="$router.push({name: 'stories', params:{initialSlide: item.id}})"
             />
           </li>
         </ul>
@@ -29,20 +29,16 @@
       />
     </div>
   </div>
-  <div>
-      <storiesSlider />
-  </div>
 </template>
 
 <script>
 import topline from '../../components/topline'
 import storyItem from '../../components/storyItem'
 import postItem from '../../components/postItem'
-import storiesSlider from '../../components/storiesSlider'
 import stories from './data.json'
 import userControls from '../../components/userControls'
 import account from './username.json'
-import * as api from '../../api'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'feeds',
@@ -50,10 +46,16 @@ export default {
     topline,
     storyItem,
     postItem,
-    storiesSlider,
     userControls
   },
   methods: {
+      ...mapActions({
+        fetchTrendings: 'trendings/fetchTrendings',
+        fetchReadme: 'readme/fetchReadme'
+      }),
+    async loadReadme () {
+     await this.fetchReadme()
+    },
     toggle (isOpened) {
       this.shown = isOpened
     },
@@ -86,8 +88,7 @@ export default {
   },
   async created () {
     try {
-      const { data } = await api.trendings.getTrendings()
-      this.items = data.items
+      this.items = await this.fetchTrendings()
     } catch (e) {
       console.log(e)
     }

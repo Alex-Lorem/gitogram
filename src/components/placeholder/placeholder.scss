@@ -1,0 +1,28 @@
+.block{
+  width: 100%;
+  height: 130px;
+  background: #DEDEDE;
+  border-radius: 5px;
+}
+.fingers--wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.finger{
+  border-radius: 5px;
+  background: #DEDEDE;
+  height: 14px;
+  margin-top: 15px;
+  &:nth-child(1){
+    width: 65%;
+    margin-top: 0;
+  }
+  &:nth-child(2){
+    width: 80%;
+  }
+  &:nth-child(3){
+     width: 50%;
+   }
+}
