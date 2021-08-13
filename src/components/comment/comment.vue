@@ -2,7 +2,7 @@
 <div class="c-comment">
   <p>
     <span class="username">{{author}}</span>
-    {{comment}}
+    {{comments_url}}
   </p>
 </div>
 </template>
@@ -15,7 +15,7 @@ export default {
       type: String,
       required: true
     },
-    comment: {
+    comments_url: {
       type: String,
       required: true
     }

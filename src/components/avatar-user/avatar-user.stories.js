@@ -16,7 +16,7 @@ const template = (args) => ({
     }
   },
   template: `
-    <x-avatar-user :user="user" :is-small="true"></x-avatar-user>
+    <x-avatar-user :avatar="user.avatar" :username="user.username" :is-small="true"></x-avatar-user>
   `
 })
 export const Default = template.bind({})

@@ -16,7 +16,7 @@ const template = () => ({
     }
   },
   template: `
-    <xstories-item-slider :user="user" style="opacity: 1; transform: scale(1)"></xstories-item-slider>
+    <xstories-item-slider :username="user.username" :avatar="user.avatar" :picture="user.picture" :description="user.subtitle" style="opacity: 1; transform: scale(1)"></xstories-item-slider>
   `
 })
 export const Default = template.bind({})

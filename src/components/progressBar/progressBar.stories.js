@@ -10,7 +10,7 @@ const template = (args) => ({
     return { args }
   },
   template: `
-    <x-progress></x-progress>
+    <x-progress style="width:375px;"></x-progress>
   `
 })
 export const Default = template.bind({})

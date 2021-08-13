@@ -1,21 +1,21 @@
 <template>
   <div class="avatar mega-small" v-if="isMegaSmall">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
   <div class="avatar extra-small" v-if="isExtraSmall">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
   <div class="avatar small" v-if="isSmall">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
   <div class="avatar medium" v-if="isMedium">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
   <div class="avatar large" v-if="isLarge">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
   <div class="avatar extra-large" v-if="isExtraLarge">
-    <img :src="user.avatar" alt="user avatar" class="img">
+    <img :src="avatar" alt="user avatar" class="img">
   </div>
 </template>
 
@@ -41,8 +41,8 @@ export default {
     isExtraLarge: {
       type: Boolean
     },
-    user: {
-      type: Object,
+    avatar: {
+      type: String,
       required: true
     }
   }

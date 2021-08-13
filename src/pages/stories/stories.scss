@@ -1,0 +1,20 @@
+.slider--wrapper{
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: #101010;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.title{
+  color: #fff;
+}
+.cross{
+  color: #fff;
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+}
