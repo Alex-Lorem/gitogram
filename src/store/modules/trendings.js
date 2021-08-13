@@ -1,20 +1,28 @@
 import * as api from '../../api'
 
-export default ({
+export default {
   namespaced: true,
   state: {
     data: []
   },
-  getters: {},
-  mutations: {},
+  mutations: {
+    SET_TRENDINGS (state, payload) {
+      state.data = payload
+    }
+  },
+  getters: {
+    getData (state) {
+      return state.data
+    }
+  },
   actions: {
-    async fetchTrendings (state) {
+    async fetchTrendings (context) {
       try {
         const { data } = await api.trendings.getTrendings()
-        return data.items
-      } catch (e) {
-        console.log(e)
+        context.commit('SET_TRENDINGS', data.items)
+      } catch (error) {
+        console.log(error)
       }
     }
   }
-})
+}

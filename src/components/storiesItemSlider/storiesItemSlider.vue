@@ -9,11 +9,12 @@
     </div>
     </div>
     <div class="content">
-        <div class="info" v-if="false">
-          <placeholder/>
-        </div>
-      <div v-if="true">
-        <slot name="content"></slot>
+
+      <div v-if="!loading">
+        <div v-html="content" class="readme"></div>
+      </div>
+      <div class="info" v-else>
+        <placeholder />
       </div>
     </div>
 
@@ -47,16 +48,13 @@ export default {
       type: String,
       required: true
     },
-    description: {
-      type: String,
-      required: true
-    },
-    picture: {
+    content: {
       type: String,
       required: true
     },
     loading: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   }
 }
