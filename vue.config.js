@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/gitogram/',
+  publicPath: '/',
   css: {
     loaderOptions: {
       sass: {

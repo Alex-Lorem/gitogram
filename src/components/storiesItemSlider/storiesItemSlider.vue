@@ -17,9 +17,10 @@
         <placeholder />
       </div>
     </div>
-
-    <div class="follow--wrapper">
-      <follow />
+    <div class="follow--wrapper" @click="$emit(following.status ? 'onUnFollow' : 'onFollow', id)">
+      <follow :loading="following.loading" :theme="following.status ? 'grey' : 'green'">
+        {{following.status ? 'Unfollow' : 'Follow'}}
+      </follow>
     </div>
   </div>
 </template>
@@ -33,6 +34,7 @@ import placeholder from '../placeholder'
 
 export default {
   name: 'StoriesItem',
+  emits: ['onFollow'],
   components: {
     follow,
     progressBar,
@@ -40,6 +42,9 @@ export default {
     placeholder
   },
   props: {
+    following: {
+      type: Object
+    },
     username: {
       type: String,
       required: true
@@ -49,11 +54,14 @@ export default {
       required: true
     },
     content: {
-      type: String,
-      required: true
+      type: String
     },
     loading: {
       type: Boolean,
+      required: true
+    },
+    id: {
+      type: Number,
       required: true
     }
   }

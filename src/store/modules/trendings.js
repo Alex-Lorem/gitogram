@@ -6,14 +6,33 @@ export default {
     data: []
   },
   mutations: {
-    SET_TRENDINGS (state, payload) {
-      state.data = payload
+    SET_TRENDINGS (state, trendings) {
+      state.data = trendings.map((item) => {
+        item.following = {
+          status: false,
+          loading: false,
+          error: 'error((('
+        }
+        return item
+      })
+    },
+    SET_FOLLOWING: (state, payload) => {
+      state.data = state.data.map((repo) => {
+        if (payload.id === repo.id) {
+          repo.following = {
+            ...repo.following,
+            ...payload.data
+          }
+        }
+        return repo
+      })
     }
   },
   getters: {
     getData (state) {
       return state.data
-    }
+    },
+    getRepoById: (state) => (id) => state.data.find((item) => item.id === id)
   },
   actions: {
     async fetchTrendings (context) {
@@ -22,6 +41,43 @@ export default {
         context.commit('SET_TRENDINGS', data.items)
       } catch (error) {
         console.log(error)
+      }
+    },
+    async starRepo ({ commit, getters }, id) {
+      const { name, owner } = getters.getRepoById(id)
+
+      console.log(name, owner.login)
+      commit('SET_FOLLOWING', {
+        id,
+        data: {
+          status: false,
+          loading: true,
+          error: 'error'
+        }
+      })
+      try {
+           await api.starred.starRepo({ repo: name, owner: owner.login })
+           commit('SET_FOLLOWING', {
+              id,
+              data: {
+                status: true
+              }
+            })
+      } catch (e) {
+          commit('SET_FOLLOWING', {
+            id,
+            data: {
+              status: false,
+              error: 'Error has happened'
+            }
+          })
+        } finally {
+        commit('SET_FOLLOWING', {
+          id,
+          data: {
+            loading: false
+          }
+        })
       }
     }
   }

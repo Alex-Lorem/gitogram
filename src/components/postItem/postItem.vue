@@ -27,6 +27,13 @@ export default {
     postTools,
     avatarUser
   },
+  methods: {
+    getDescription (content) {
+      if (content) {
+        return true
+      } else return false
+    }
+  },
   props: {
     avatar: {
       type: String,
@@ -41,8 +48,7 @@ export default {
       required: true
     },
     description: {
-      type: String,
-      required: true
+      type: String
     },
     data: {
       type: String,

@@ -2,12 +2,9 @@
   <div class="topline">
     <topline>
       <template #headline>
-        <h1 @click="getUser"> Gitogram /</h1>
+        <h1> Gitogram /</h1>
         <userControls
-          v-for="user in account"
-          :user="user"
-          :key="user.id"
-          @onPress="handlePress(user.id)"
+          :avatar="getUser.avatar_url"
         />
       </template>
       <template #content>
@@ -50,29 +47,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      trendings: 'trendings/getData'
+      trendings: 'trendings/getData',
+      getUser: 'auth/getUser'
     })
   },
   methods: {
-    async getUser () {
-      try {
-        const response = await fetch('https://api.github.com/user', {
-          headers: {
-            Authorization: `token ${localStorage.getItem('token')}`
-          }
-        })
-        const data = await response.json()
-        console.log(data)
-      } catch (e) {
-        console.log(e)
-      }
-    },
       ...mapActions({
-        fetchTrendings: 'trendings/fetchTrendings'
+        fetchTrendings: 'trendings/fetchTrendings',
+        fetchAuth: 'auth/fetchAuth',
+        fetchStars: 'auth/fetchStars'
       }),
-    async loadReadme () {
-     await this.fetchReadme()
-    },
     toggle (isOpened) {
       this.shown = isOpened
     },
@@ -97,6 +81,7 @@ export default {
   },
   data () {
     return {
+      dataUser: [],
       stories,
       account,
       shown: false
@@ -107,6 +92,8 @@ export default {
       return
     }
     await this.fetchTrendings()
+    await this.fetchAuth()
+    await this.fetchStars()
   }
 }
 </script>

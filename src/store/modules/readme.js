@@ -12,7 +12,7 @@ export default ({
         const { data } = await api.readme.getReadme({ owner, name })
         return data
       } catch (e) {
-        console.log(e)
+          return '<div style="font-weight: bold">Unfortunately we could not download the content, most likely this user refused to write a readme file</div>'
       }
     }
   }

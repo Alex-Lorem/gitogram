@@ -7,7 +7,7 @@
     <button @click="getCode" class="auth__button">Authorize with github <icon name="github" class="githubIcon"></icon></button>
   </div>
     <div class="img--wrapper">
-      <img src="../../img/auth.png" alt="auth img">
+      <img src="../../assets/img/auth.png" alt="auth img">
     </div>
     <div class="copyright">© Gitogram from Loftschool</div>
   </div>
@@ -32,10 +32,9 @@ export default {
   },
   async created () {
     const code = new URLSearchParams(window.location.search).get('code')
-    console.log(code)
     if (code) {
       try {
-        const response = await fetch('http://localhost:8080/github', {
+        const response = await fetch('https://webdev-api.loftschool.com/github', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -49,12 +48,11 @@ export default {
         const { token } = await response.json()
         localStorage.setItem('token', token)
         await this.$router.replace({ name: 'feeds' })
-        console.log(token)
       } catch (e) {
         console.log(e)
       }
     } else {
-
+        console.log('doesnt work')
     }
   }
 }

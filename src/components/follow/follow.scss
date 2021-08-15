@@ -1,7 +1,6 @@
-.follow{
+.btn{
   width: 270px;
   height: 45px;
-  background: #31AE54;
   color: #fff;
   border-radius: 5px;
   font-weight: 700;
@@ -12,6 +11,29 @@
   align-items: center;
   justify-content: center;
 }
-.active{
+.green{
+  background: #31AE54;
+}
+.grey {
   background: #9E9E9E;
+}
+.loading{
+  position: relative;
+  background: #9E9E9E;
+  cursor: progress;
+  .spinner{
+    width: 30px;
+    height: 30px;
+    transform: rotate(360deg);
+    animation: spinner-rotate infinite linear 1.5s;
+  }
+}
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

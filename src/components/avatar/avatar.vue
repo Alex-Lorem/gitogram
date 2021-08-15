@@ -42,8 +42,7 @@ export default {
       type: Boolean
     },
     avatar: {
-      type: String,
-      required: true
+      type: String
     }
   }
 }
