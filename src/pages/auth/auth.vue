@@ -14,9 +14,7 @@
 </template>
 
 <script>
-const clientId = '487724bd695c47ac1ca8'
-const clientSecret = 'e959c5413e9ad1dada42582ddadaffff13593a25'
-
+import env from '../../../env.js'
 export default {
   name: 'auth',
   methods: {
@@ -25,8 +23,8 @@ export default {
 
       const params = new URLSearchParams()
 
-      params.append('client_id', clientId)
-      params.append('scope', 'repo:status read:user')
+      params.append('client_id', env.clientId)
+      params.append('scope', 'repo,user')
       window.location.href = `${githubAuthApi}?${params}`
     }
   },
@@ -40,9 +38,9 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            clientId,
+            clientId: env.clientId,
             code,
-            clientSecret
+            clientSecret: env.clientSecret
           })
         })
         const { token } = await response.json()

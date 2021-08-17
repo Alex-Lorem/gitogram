@@ -1,20 +1,19 @@
 .tools{
   display: flex;
-  width: 240px;
   overflow: hidden;
   border: 1px #aaa9a9 solid;
   border-radius: 5px;
+  width: fit-content;
 }
 .tool__item{
   border-right: 1px grey solid;
-  padding: 5px 0;
+  padding: 5px 10px;
   text-align: center;
   cursor: pointer;
   color: #24292E;
   box-shadow: inset 0px -1px 0px rgba(27, 31, 35, 0.12), inset 0px 1px 0px rgba(27, 31, 35, 0.12);
 }
 .star{
-  flex: 0.325;
   background: #FAFBFC;
   display: flex;
   justify-content: center;
@@ -31,13 +30,11 @@
   height: 16px;
   margin-right: 5px;
   color: #586069;
-
 }
 .likes{
-  flex: 0.25;
+
 }
 .fork{
-  flex: 0.325;
   background: #FAFBFC;
   font-weight: 600;
   display: flex;
@@ -52,6 +49,5 @@
 
 }
 .forums{
-  flex: 0.1;
   border: none;
 }

@@ -7,11 +7,11 @@
       <h2>{{title}}</h2>
       <div class="subtitle">{{description}}</div>
       <div class="tools--wrapper">
-        <postTools :forks_count="forks_count" :watchers_count="watchers_count"/>
+        <postTools :forks_count="forks_count" :stars_count="stars_count"/>
       </div>
     </div>
-    <toggleComment :comments_url="comments_url"/>
-    <div class="data">{{data}}</div>
+    <toggleComment :comments="comments"/>
+    <div class="data">{{parsingData(data)}}</div>
   </div>
 
 </template>
@@ -28,10 +28,10 @@ export default {
     avatarUser
   },
   methods: {
-    getDescription (content) {
-      if (content) {
-        return true
-      } else return false
+    parsingData (data) {
+      data = new Date(data)
+      data = data.toLocaleString('en-US', { month: 'long', day: 'numeric' })
+      return data
     }
   },
   props: {
@@ -58,13 +58,12 @@ export default {
       type: Number,
       required: true
     },
-    watchers_count: {
+    stars_count: {
       type: Number,
       required: true
     },
-    comments_url: {
-      type: String,
-      required: true
+    comments: {
+      type: Array
     }
   }
 }

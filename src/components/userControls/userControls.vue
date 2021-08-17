@@ -1,25 +1,31 @@
 <template>
   <div class="icons__wrapper">
-    <a class="icon home">
+    <button class="icon home">
       <icon name="home"/>
-    </a>
+    </button>
     <button class="account" @click="$emit('onPress')">
       <avatar :avatar="avatar" :is-extra-small="true"/>
     </button>
-    <a class="icon exit">
+    <button class="icon exit" @click="logout">
       <icon name="exit"/>
-    </a>
+    </button>
   </div>
 </template>
 
 <script>
 import avatar from '../avatar'
+import { mapActions } from 'vuex'
 export default {
   name: 'userControls',
   props: {
     avatar: {
       type: String
     }
+  },
+  methods: {
+    ...mapActions({
+      logout: 'auth/logout'
+    })
   },
   components: {
     avatar

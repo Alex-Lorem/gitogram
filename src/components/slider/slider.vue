@@ -9,7 +9,7 @@
           :loading="loading"
           :id="item.id"
           :following="item.following"
-          @onFollow="starRepo"
+          @followRepo="isFollowed(item.following, item.id)"
         />
       </splide-slide>
     </splide >
@@ -20,7 +20,7 @@
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
 import storiesItemSlider from '../../components/storiesItemSlider/storiesItemSlider.vue'
 import '@splidejs/splide/dist/css/themes/splide-default.min.css'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'slider',
@@ -62,6 +62,14 @@ export default {
     }
   },
   methods: {
+    isFollowed (item, id) {
+      if (item.isFollowed) {
+        return this.unStarRepo(id)
+      }
+      if (!item.isFollowed) {
+        return this.starRepo(id)
+      }
+    },
     onMounted (splide) {
       if (this.storyIndex === 0) {
         splide.index = 0
@@ -71,7 +79,11 @@ export default {
     },
     ...mapActions({
       fetchReadme: 'readme/fetchReadme',
-      starRepo: 'trendings/starRepo'
+      starRepo: 'trendings/starRepo',
+      unStarRepo: 'trendings/unStarRepo'
+    }),
+    ...mapGetters({
+      readme: 'readme/get'
     }),
     getReadmeForItem (index) {
       const content = this.readmeItems[index]

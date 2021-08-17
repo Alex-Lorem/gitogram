@@ -20,9 +20,10 @@
     </topline>
   </div>
   <div class="container">
-    <div class="postItem--wrapper" v-for="item in trendings" :key="item.id">
+    <div class="postItem--wrapper" v-for="(item, index) in postItems" :key="item.id">
       <postItem
         v-bind="getPostData(item)"
+        :comments="getIssueItem(index)"
       />
     </div>
   </div>
@@ -32,7 +33,6 @@
 import topline from '../../components/topline'
 import storyItem from '../../components/storyItem'
 import postItem from '../../components/postItem'
-import stories from './data.json'
 import userControls from '../../components/userControls'
 import account from './username.json'
 import { mapActions, mapGetters } from 'vuex'
@@ -48,14 +48,17 @@ export default {
   computed: {
     ...mapGetters({
       trendings: 'trendings/getData',
-      getUser: 'auth/getUser'
+      getUser: 'auth/getUser',
+      postItems: 'starred/getPostItems',
+      issuesItems: 'issues/getIssuesItems'
     })
   },
   methods: {
       ...mapActions({
         fetchTrendings: 'trendings/fetchTrendings',
         fetchAuth: 'auth/fetchAuth',
-        fetchStars: 'auth/fetchStars'
+        fetchStars: 'starred/fetchStars',
+        fetchIssues: 'issues/fetchIssues'
       }),
     toggle (isOpened) {
       this.shown = isOpened
@@ -74,26 +77,34 @@ export default {
         description: item.description,
         data: item.pushed_at,
         forks_count: item.forks_count,
-        watchers_count: item.watchers_count,
-        comments_url: item.comments_url
+        stars_count: item.stargazers_count
       }
+    },
+    getIssueItem (index) {
+      const content = this.issues[index]
+      return content
     }
   },
   data () {
     return {
-      dataUser: [],
-      stories,
+      issues: [],
       account,
       shown: false
     }
   },
   async created () {
-    if (this.trendings.length > 0) {
-      return
-    }
+    // if (this.trendings.length > 0) {
+    //   return
+    // }
     await this.fetchTrendings()
     await this.fetchAuth()
     await this.fetchStars()
+    for (let i = 0; i < this.trendings.length; i++) {
+      const item = this.trendings[i]
+      const result = await this.fetchIssues(item)
+      this.issues.push(result)
+    }
+    console.log(this.issuesItems)
   }
 }
 </script>

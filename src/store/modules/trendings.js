@@ -45,8 +45,6 @@ export default {
     },
     async starRepo ({ commit, getters }, id) {
       const { name, owner } = getters.getRepoById(id)
-
-      console.log(name, owner.login)
       commit('SET_FOLLOWING', {
         id,
         data: {
@@ -60,6 +58,7 @@ export default {
            commit('SET_FOLLOWING', {
               id,
               data: {
+                isFollowed: true,
                 status: true
               }
             })
@@ -72,6 +71,42 @@ export default {
             }
           })
         } finally {
+        commit('SET_FOLLOWING', {
+          id,
+          data: {
+            loading: false
+          }
+        })
+      }
+    },
+    async unStarRepo ({ commit, getters }, id) {
+      const { name, owner } = getters.getRepoById(id)
+      commit('SET_FOLLOWING', {
+        id,
+        data: {
+          status: false,
+          loading: true,
+          error: 'error'
+        }
+      })
+      try {
+        await api.starred.unStarRepo({ repo: name, owner: owner.login })
+        commit('SET_FOLLOWING', {
+          id,
+          data: {
+            isFollowed: false,
+            status: true
+          }
+        })
+      } catch (e) {
+        commit('SET_FOLLOWING', {
+          id,
+          data: {
+            status: false,
+            error: 'Error has happened'
+          }
+        })
+      } finally {
         commit('SET_FOLLOWING', {
           id,
           data: {

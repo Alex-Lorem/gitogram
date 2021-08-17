@@ -5,6 +5,16 @@ export default ({
   state: {
     data: []
   },
+  getters: {
+    getReadme (state) {
+      return state.data
+    }
+  },
+  mutations: {
+      SET_README (state, payload) {
+        state.data = payload
+      }
+  },
   actions: {
     async fetchReadme (store, { owner, name }) {
       try {

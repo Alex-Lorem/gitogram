@@ -22,5 +22,8 @@ export const starRepo = ({ repo, owner }) => makeRequest({
 
 export const unStarRepo = ({ repo, owner }) => makeRequest({
   url: `/user/starred/${owner}/${repo}`,
-  method: 'delete'
+  method: 'delete',
+  headers: {
+    Authorization: `token ${localStorage.getItem('token')}`
+  }
 })

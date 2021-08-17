@@ -2,7 +2,7 @@
 <div class="c-comment">
   <p>
     <span class="username">{{author}}</span>
-    {{comments_url}}
+    {{comment}}
   </p>
 </div>
 </template>
@@ -12,12 +12,10 @@ export default {
   name: 'comment',
   props: {
     author: {
-      type: String,
-      required: true
+      type: String
     },
-    comments_url: {
-      type: String,
-      required: true
+    comment: {
+      type: String
     }
   }
 }

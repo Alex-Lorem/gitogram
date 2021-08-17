@@ -1,3 +1,4 @@
+// this is for avatar and logout
 export default ({
   namespaced: true,
   state: {
@@ -9,6 +10,10 @@ export default ({
     }
   },
   actions: {
+    async logout () {
+      localStorage.removeItem('token')
+      window.location.reload()
+    },
     async fetchAuth (context) {
       try {
         const response = await fetch('https://api.github.com/user', {
@@ -21,25 +26,11 @@ export default ({
       } catch (e) {
         console.log(e)
       }
-    },
-    async fetchStars (context) {
-      try {
-        const response = await fetch('https://api.github.com/user/starred', {
-          headers: {
-            Authorization: `token ${localStorage.getItem('token')}`
-          }
-        })
-        const user = await response.json()
-        // context.commit('SET_STARS', user)
-        console.log(user)
-      } catch (e) {
-        console.log(e)
-      }
     }
   },
   getters: {
     getUser (state) {
-        return state.user || {}
+      return state.user || {}
     },
     loggedIn (state) {
       return state.user !== null

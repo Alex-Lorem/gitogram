@@ -2,8 +2,8 @@
   <div>
   <toggler @onToggle="toggle" />
   <ul class="comments"  v-if="shown">
-    <li class="comment" v-for="user in 3" :key="user.id">
-      <comment author="Jack" :comments_url="comments_url"/>
+    <li class="comment" v-for="comment in comments" :key="comment.id">
+      <comment :author="comment.user.login" :comment="comment.title"/>
     </li>
   </ul>
   </div>
@@ -20,9 +20,8 @@ export default {
     toggler
   },
   props: {
-    comments_url: {
-      type: String,
-      required: true
+    comments: {
+      type: Array
     }
   },
   data () {
