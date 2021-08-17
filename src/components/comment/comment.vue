@@ -1,9 +1,7 @@
 <template>
 <div class="c-comment">
-  <p>
-    <span class="username">{{author}}</span>
+    <span class="username">{{author}}:</span>
     {{comment}}
-  </p>
 </div>
 </template>
 

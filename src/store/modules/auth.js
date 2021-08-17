@@ -2,11 +2,15 @@
 export default ({
   namespaced: true,
   state: {
-    user: null
+    user: null,
+    data: {
+      loading: true
+    }
   },
   mutations: {
     SET_USER (state, payload) {
-      state.user = payload
+      state.user = payload.user
+      state.data.loading = payload.data.loading
     }
   },
   actions: {
@@ -22,7 +26,12 @@ export default ({
           }
         })
         const user = await response.json()
-        context.commit('SET_USER', user)
+        context.commit('SET_USER', {
+          user,
+          data: {
+            loading: false
+          }
+        })
       } catch (e) {
         console.log(e)
       }
@@ -31,6 +40,9 @@ export default ({
   getters: {
     getUser (state) {
       return state.user || {}
+    },
+    getUserLoading (state) {
+      return state.data
     },
     loggedIn (state) {
       return state.user !== null

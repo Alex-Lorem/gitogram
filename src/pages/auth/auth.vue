@@ -15,6 +15,7 @@
 
 <script>
 import env from '../../../env.js'
+
 export default {
   name: 'auth',
   methods: {

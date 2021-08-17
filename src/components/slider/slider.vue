@@ -1,13 +1,14 @@
 <template>
   <div>
-    <splide :options="options" @splide:mounted="onMounted" v-if="trendings.length" >
-      <splide-slide class="slider-item" v-for="(item, index) in trendings" :key="item.id">
+    <splide :options="options" @splide:mounted="onMounted" v-if="getUnstarredOnly.length" >
+      <splide-slide class="slider-item" v-for="(item, index) in getUnstarredOnly" :key="item.id">
         <storiesItemSlider
           :avatar="item.owner.avatar_url"
           :username="item.owner.login"
-          :content="getReadmeForItem(index)"
-          :loading="loading"
+          :active="index === currentSlide"
           :id="item.id"
+          :owner_login="item.owner.login"
+          :repo="item.name"
           :following="item.following"
           @followRepo="isFollowed(item.following, item.id)"
         />
@@ -29,6 +30,9 @@ export default {
     Splide,
     SplideSlide
   },
+  computed: {
+    ...mapGetters(['getUnstarredOnly'])
+  },
   props: {
     storyIndex: {
       type: Number
@@ -40,6 +44,7 @@ export default {
   },
   data () {
     return {
+      currentSlide: 0,
       loading: true,
       readmeItems: [],
       items: this.trendings,
@@ -64,43 +69,27 @@ export default {
   methods: {
     isFollowed (item, id) {
       if (item.isFollowed) {
-        return this.unStarRepo(id)
+        this.unStarRepo(id)
       }
       if (!item.isFollowed) {
-        return this.starRepo(id)
+        this.starRepo(id)
       }
     },
     onMounted (splide) {
-      if (this.storyIndex === 0) {
-        splide.index = 0
-      } else if (this.storyIndex > 0) {
-        this.$nextTick(() => splide.go(this.storyIndex))
-      }
-    },
+        splide.on('moved', (index) => {
+          this.currentSlide = index
+        })
+        if (this.storyIndex === 0) {
+          splide.index = 0
+        } else if (this.storyIndex > 0) {
+          this.$nextTick(() => splide.go(this.storyIndex))
+        }
+      },
     ...mapActions({
-      fetchReadme: 'readme/fetchReadme',
       starRepo: 'trendings/starRepo',
       unStarRepo: 'trendings/unStarRepo'
-    }),
-    ...mapGetters({
-      readme: 'readme/get'
-    }),
-    getReadmeForItem (index) {
-      const content = this.readmeItems[index]
-      return content
-    }
-  },
-  async created () {
-    try {
-      for (let i = 0; i < this.items.length; i++) {
-        const item = this.items[i]
-        const result = await this.fetchReadme(item)
-        this.readmeItems.push(result)
-        this.loading = false
-      }
-    } catch (e) {
+    })
 
-    }
   }
 }
 </script>

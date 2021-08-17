@@ -5,11 +5,12 @@
         <h1> Gitogram /</h1>
         <userControls
           :avatar="getUser.avatar_url"
+          :loading="getUserLoading.loading"
         />
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="(item, index) in trendings" :key="item.id">
+          <li class="stories-item" v-for="(item, index) in getUnstarredOnly" :key="item.id">
             <story-item
               v-bind="getStoryData(item)"
               @click="$router.push({name: 'stories', query: { index }})"
@@ -34,7 +35,6 @@ import topline from '../../components/topline'
 import storyItem from '../../components/storyItem'
 import postItem from '../../components/postItem'
 import userControls from '../../components/userControls'
-import account from './username.json'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -50,8 +50,10 @@ export default {
       trendings: 'trendings/getData',
       getUser: 'auth/getUser',
       postItems: 'starred/getPostItems',
-      issuesItems: 'issues/getIssuesItems'
-    })
+      issuesItems: 'issues/getIssuesItems',
+      getUserLoading: 'auth/getUserLoading'
+    }),
+    ...mapGetters(['getUnstarredOnly'])
   },
   methods: {
       ...mapActions({
@@ -71,6 +73,7 @@ export default {
     },
     getPostData (item) {
       return {
+        id: item.id,
         avatar: item.owner.avatar_url,
         username: item.owner.login,
         title: item.name,
@@ -88,14 +91,10 @@ export default {
   data () {
     return {
       issues: [],
-      account,
       shown: false
     }
   },
   async created () {
-    // if (this.trendings.length > 0) {
-    //   return
-    // }
     await this.fetchTrendings()
     await this.fetchAuth()
     await this.fetchStars()
@@ -103,8 +102,7 @@ export default {
       const item = this.trendings[i]
       const result = await this.fetchIssues(item)
       this.issues.push(result)
-    }
-    console.log(this.issuesItems)
+      }
   }
 }
 </script>

@@ -6,5 +6,10 @@ import starred from './modules/starred'
 import issues from './modules/issues'
 
 export default createStore({
+  getters: {
+    getUnstarredOnly (state) {
+      return state.trendings.data.filter((trendingsRepo) => !state.starred.data.some((starredRepo) => trendingsRepo.id === starredRepo.id))
+    }
+  },
   modules: { trendings, readme, auth, starred, issues }
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-post-item" @click="$emit('onPress')">
+  <div class="c-post-item">
     <div class="user--wrapper">
       <avatar-user :avatar="avatar" :username="username" :is-small="true" />
     </div>
@@ -7,10 +7,10 @@
       <h2>{{title}}</h2>
       <div class="subtitle">{{description}}</div>
       <div class="tools--wrapper">
-        <postTools :forks_count="forks_count" :stars_count="stars_count"/>
+        <postTools :forks_count="forks_count" :stars_count="stars_count" @unFollowPost="unFollowPost(id)"/>
       </div>
     </div>
-    <toggleComment :comments="comments"/>
+    <toggleComment :comments="comments" />
     <div class="data">{{parsingData(data)}}</div>
   </div>
 
@@ -20,6 +20,7 @@
 import toggleComment from '../toggle-comment/toggle-comment.vue'
 import postTools from '../postTools'
 import avatarUser from '../avatar-user/avatar-user.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -27,14 +28,24 @@ export default {
     postTools,
     avatarUser
   },
+  emits: ['onUnfollowPost'],
   methods: {
+    unFollowPost (id) {
+      this.unStarRepo(id)
+    },
     parsingData (data) {
       data = new Date(data)
       data = data.toLocaleString('en-US', { month: 'long', day: 'numeric' })
       return data
-    }
+    },
+    ...mapActions({
+      unStarRepo: 'trendings/unStarRepo'
+    })
   },
   props: {
+    id: {
+      type: Number
+    },
     avatar: {
       type: String,
       required: true
@@ -63,10 +74,14 @@ export default {
       required: true
     },
     comments: {
-      type: Array
+      type: Array,
+      default () {
+        return ['iaamdi']
+      }
     }
   }
 }
+
 </script>
 
 <style lang="scss" src="./postItem.scss" scoped>

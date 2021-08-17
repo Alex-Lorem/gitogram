@@ -3,8 +3,9 @@
     <button class="icon home">
       <icon name="home"/>
     </button>
-    <button class="account" @click="$emit('onPress')">
-      <avatar :avatar="avatar" :is-extra-small="true"/>
+    <button class="account" >
+      <div v-if="loading"><img src="" alt=""> </div>
+      <avatar :avatar="avatar" :is-extra-small="true" v-else/>
     </button>
     <button class="icon exit" @click="logout">
       <icon name="exit"/>
@@ -20,6 +21,9 @@ export default {
   props: {
     avatar: {
       type: String
+    },
+    loading: {
+      type: Boolean
     }
   },
   methods: {

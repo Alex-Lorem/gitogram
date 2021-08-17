@@ -20,7 +20,7 @@ export default ({
       try {
         owner = owner.login
         const { data } = await api.issues.getIssues({ owner, repo: name })
-        store.commit('SET_ISSUES', data.items)
+        store.commit('SET_ISSUES', data)
         return data
       } catch (e) {
           console.log(e)
