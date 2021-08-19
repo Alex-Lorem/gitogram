@@ -67,12 +67,12 @@ export default {
     }
   },
   methods: {
-    isFollowed (item, id) {
+   async isFollowed (item, id) {
       if (item.isFollowed) {
-        this.unStarRepo(id)
+        await this.unStarRepo(id)
       }
       if (!item.isFollowed) {
-        this.starRepo(id)
+        await this.starRepo(id)
       }
     },
     onMounted (splide) {

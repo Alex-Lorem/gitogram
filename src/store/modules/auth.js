@@ -1,4 +1,6 @@
 // this is for avatar and logout
+import * as api from '../../api'
+
 export default ({
   namespaced: true,
   state: {
@@ -20,12 +22,7 @@ export default ({
     },
     async fetchAuth (context) {
       try {
-        const response = await fetch('https://api.github.com/user', {
-          headers: {
-            Authorization: `token ${localStorage.getItem('token')}`
-          }
-        })
-        const user = await response.json()
+        const user = await api.user.getUserData()
         context.commit('SET_USER', {
           user,
           data: {
@@ -39,7 +36,7 @@ export default ({
   },
   getters: {
     getUser (state) {
-      return state.user || {}
+      return state || {}
     },
     getUserLoading (state) {
       return state.data

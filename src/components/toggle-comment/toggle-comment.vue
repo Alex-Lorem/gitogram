@@ -2,13 +2,14 @@
   <div>
   <toggler @onToggle="toggle" />
   <ul class="comments"  v-if="shown" >
-    <li class="comment" v-for="comment in comments" :key="comment.id"  >
+    <li class="comment" v-for="comment in comments[0]" :key="comment.id"  >
       <comment :author="comment.user.login" :comment="comment.title"/>
     </li>
+
     <div class="issue" v-if="comments.length === 0">~There aren't any issues yet~</div>
   </ul>
-
   </div>
+
 </template>
 
 <script>

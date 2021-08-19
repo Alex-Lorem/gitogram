@@ -1,17 +1,17 @@
 <template>
-  <div class="c-post-item">
+  <div class="c-post-item" v-if="postShown">
     <div class="user--wrapper">
-      <avatar-user :avatar="avatar" :username="username" :is-small="true" />
+      <avatar-user :avatar="avatar" :username="username" :is-small="true"/>
     </div>
     <div class="user__content">
-      <h2>{{title}}</h2>
-      <div class="subtitle">{{description}}</div>
+      <h2>{{ name }}</h2>
+      <div class="subtitle">{{ description }}</div>
       <div class="tools--wrapper">
         <postTools :forks_count="forks_count" :stars_count="stars_count" @unFollowPost="unFollowPost(id)"/>
       </div>
     </div>
-    <toggleComment :comments="comments" />
-    <div class="data">{{parsingData(data)}}</div>
+    <toggleComment :comments="issues" @click="getIssue({owner, name, id})"/>
+    <div class="data">{{ parsingData(data) }}</div>
   </div>
 
 </template>
@@ -20,7 +20,7 @@
 import toggleComment from '../toggle-comment/toggle-comment.vue'
 import postTools from '../postTools'
 import avatarUser from '../avatar-user/avatar-user.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -28,21 +28,56 @@ export default {
     postTools,
     avatarUser
   },
+  data () {
+    return {
+      issues: [],
+      postShown: true
+    }
+  },
   emits: ['onUnfollowPost'],
   methods: {
-    unFollowPost (id) {
-      this.unStarRepo(id)
+    async getIssue ({ owner, name, id }) {
+      const storeIssues = this.getIssuesItems()
+      if (this.issues.includes(storeIssues[id])) {
+
+      } else {
+        const response = await this.fetchIssues({ owner, name, id })
+        if (response.length === 0) {
+        } else {
+          this.issues.push(response)
+        }
+      }
+    },
+    async unFollowPost (id) {
+      // let repo
+      // let ar = this.postItems
+      // for (let i = 0; i < this.postItems.length; i++) {
+      //   repo = this.postItems.find((item) => item.id === id)
+      //   const index = this.postItems.indexOf(repo)
+      //   ar.splice(index, 1)
+      // }
+      // ar = this.postItems
+      // console.log(ar)
+      // console.log(id)
+      await this.unStarRepo(id)
     },
     parsingData (data) {
       data = new Date(data)
       data = data.toLocaleString('en-US', { month: 'long', day: 'numeric' })
       return data
     },
+    ...mapGetters({
+      getIssuesItems: 'issues/getIssuesItems'
+    }),
     ...mapActions({
-      unStarRepo: 'trendings/unStarRepo'
+      unStarRepo: 'trendings/unStarRepo',
+      fetchIssues: 'issues/fetchIssues'
     })
   },
   props: {
+    postItems: {
+      type: Array
+    },
     id: {
       type: Number
     },
@@ -54,7 +89,11 @@ export default {
       type: String,
       required: true
     },
-    title: {
+    owner: {
+      type: Object,
+      required: true
+    },
+    name: {
       type: String,
       required: true
     },
@@ -74,10 +113,7 @@ export default {
       required: true
     },
     comments: {
-      type: Array,
-      default () {
-        return ['iaamdi']
-      }
+      type: Array
     }
   }
 }

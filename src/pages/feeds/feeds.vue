@@ -4,7 +4,7 @@
       <template #headline>
         <h1> Gitogram /</h1>
         <userControls
-          :avatar="getUser.avatar_url"
+          :avatar="getUser.user.data.avatar_url"
           :loading="getUserLoading.loading"
         />
       </template>
@@ -25,6 +25,7 @@
       <postItem
         v-bind="getPostData(item)"
         :comments="getIssueItem(index)"
+        :postItems="postItems"
       />
     </div>
   </div>
@@ -58,7 +59,6 @@ export default {
   methods: {
       ...mapActions({
         fetchTrendings: 'trendings/fetchTrendings',
-        fetchAuth: 'auth/fetchAuth',
         fetchStars: 'starred/fetchStars',
         fetchIssues: 'issues/fetchIssues'
       }),
@@ -76,7 +76,8 @@ export default {
         id: item.id,
         avatar: item.owner.avatar_url,
         username: item.owner.login,
-        title: item.name,
+        name: item.name,
+        owner: item.owner,
         description: item.description,
         data: item.pushed_at,
         forks_count: item.forks_count,
@@ -96,13 +97,7 @@ export default {
   },
   async created () {
     await this.fetchTrendings()
-    await this.fetchAuth()
     await this.fetchStars()
-    for (let i = 0; i < this.trendings.length; i++) {
-      const item = this.trendings[i]
-      const result = await this.fetchIssues(item)
-      this.issues.push(result)
-      }
   }
 }
 </script>

@@ -6,8 +6,8 @@ export default ({
     data: []
   },
   mutations: {
-    SET_ISSUES (state, payload) {
-      state.data = payload
+    SET_ISSUES (state, { data, id }) {
+      state.data[id] = data
     }
   },
   getters: {
@@ -16,11 +16,10 @@ export default ({
     }
   },
   actions: {
-    async fetchIssues (store, { owner, name }) {
+    async fetchIssues (store, { owner, name, id }) {
       try {
-        owner = owner.login
-        const { data } = await api.issues.getIssues({ owner, repo: name })
-        store.commit('SET_ISSUES', data)
+        const { data } = await api.issues.getIssues({ owner: owner.login, repo: name })
+        store.commit('SET_ISSUES', { data, id })
         return data
       } catch (e) {
           console.log(e)

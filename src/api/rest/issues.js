@@ -5,6 +5,6 @@ export const getIssues = ({ owner, repo }) => {
   params.append('per_page', 10)
 
   return makeRequest({
-    url: `/repos/${owner}/${repo}/issues`
+    url: `/repos/${owner}/${repo}/issues?${params}`
   })
 }
