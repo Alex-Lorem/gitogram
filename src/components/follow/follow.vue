@@ -16,7 +16,7 @@ export default {
     },
     theme: {
       validator (value) {
-        return ['green', 'grey'].includes(value)
+        return ['green', 'grey', 'greenA', 'greyA'].includes(value)
       }
     }
   }

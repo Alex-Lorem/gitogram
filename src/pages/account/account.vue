@@ -15,15 +15,16 @@
       <h2 class="profile-title">My profile</h2>
       <div class="profile-user">
         <profileUser
+          @buttonShow="buttonShow('starred')"
           v-bind="getUserInfo(getUser)"
         />
       </div>
       <ul class="profile-nav">
         <li class="profile-nav-item">
-          <button class="profile-nav-link" :class="[activeR]" @click="buttonShow('r')">Repositories</button>
+          <button class="profile-nav-link" :class="[activeR]" @click="buttonShow('repos')">Repositories</button>
         </li>
         <li class="profile-nav-item">
-          <button class="profile-nav-link" :class="[activeS]" @click="buttonShow">Starred</button>
+          <button class="profile-nav-link" :class="[activeS]" @click="buttonShow('starred')">Starred</button>
         </li>
       </ul>
     </div>
@@ -70,12 +71,13 @@ export default {
   },
   methods: {
     buttonShow (arg) {
-      if (arg === 'r') {
+      if (arg === 'repos') {
         this.showStarred = false
         this.showRepos = true
         this.activeR = 'active'
         this.activeS = ''
-      } else {
+      }
+      if (arg === 'starred') {
         this.showRepos = false
         this.showStarred = true
         this.activeS = 'active'

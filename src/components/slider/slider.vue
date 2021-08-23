@@ -31,6 +31,9 @@ export default {
     SplideSlide
   },
   computed: {
+    ...mapGetters({
+      getPostItems: 'starred/getPostItems'
+    }),
     ...mapGetters(['getUnstarredOnly'])
   },
   props: {
@@ -70,6 +73,10 @@ export default {
    async isFollowed (item, id, name, owner) {
       if (item.isFollowed) {
         await this.unStarRepo({ name, owner, id })
+        const index = this.getUnstarredOnly.indexOf(this.getUnstarredOnly[id])
+        this.getUnstarredOnly.splice(index, index + 1)
+        console.log(id)
+        console.log(this.getUnstarredOnly)
       }
       if (!item.isFollowed) {
         await this.starRepo({ name, owner, id })

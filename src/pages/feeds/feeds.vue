@@ -48,23 +48,21 @@ export default {
     ...mapGetters({
       trendings: 'trendings/getData',
       getUser: 'auth/getUser',
-      postItems: 'starred/getPostItems'
+      getPostItems: 'starred/getPostItems'
     }),
     ...mapGetters(['getUnstarredOnly'])
   },
   methods: {
     async unFollowPost (name, owner, id) {
-      await this.unStarRepo({ name, owner, id })
-       let repo
-       let ar = this.postItems
-      for (let i = 0; i < this.postItems.length; i++) {
-        repo = this.postItems.find((item) => item.id === id)
-        const index = this.postItems.indexOf(repo)
-        ar.splice(index, 1)
+       await this.unStarRepo({ name, owner, id })
+
+      for (let i = 0; i < this.getPostItems.length; i++) {
+        if (this.getPostItems[i].id === id) {
+          const index = this.getPostItems.indexOf(this.getPostItems[i])
+          this.getPostItems.splice(index, index + 1)
+        }
       }
-      ar = this.postItems
-      console.log(ar)
-      console.log(id)
+      this.postItems = this.getPostItems
     },
       ...mapActions({
         fetchTrendings: 'trendings/fetchTrendings',
@@ -96,16 +94,21 @@ export default {
   },
   data () {
     return {
-      shown: false
+      shown: false,
+      postItems: []
     }
   },
   async created () {
     if (!this.trendings.length) {
       await this.fetchTrendings()
     }
-    if (!this.postItems.length) {
+    if (this.getPostItems.length) {
+      this.postItems = this.getPostItems
+    } else {
       await this.fetchStars()
+      this.postItems = this.getPostItems
     }
+    // console.log(this.getUnstarredOnly)
   }
 }
 </script>

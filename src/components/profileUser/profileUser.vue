@@ -11,7 +11,7 @@
         </div>
         <div class="starred">
           <span>{{ starred }}</span>
-          <button class="numbers-link">starred</button>
+          <button class="numbers-link" @click="$emit('buttonShow')">starred</button>
         </div>
       </div>
       <div class="user-name">

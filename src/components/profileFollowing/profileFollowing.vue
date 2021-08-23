@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="follow--wrapper" @click="unFollow(item.id)">
-      <follow :loading="false" :theme="'green'">
+      <follow :loading="false" :theme="'greenA'">
         star
       </follow>
     </div>
@@ -58,6 +58,8 @@ export default {
           const owner = this.array[i].owner
           const id = this.array[i].id
           await this.unStarRepo({ name, owner, id })
+          const index = this.getPosts.indexOf(this.getPosts[i])
+          this.array.splice(index, index + 1)
         }
       }
     },
