@@ -32,7 +32,9 @@ export default {
     })
   },
   async created () {
-    await this.fetchTrendings()
+    if (!this.trendings.length) {
+      await this.fetchTrendings()
+    }
   }
 
 }

@@ -10,11 +10,6 @@ export default ({
       state.data[id] = data
     }
   },
-  getters: {
-    getIssuesItems (state) {
-      return state.data
-    }
-  },
   actions: {
     async fetchIssues (store, { owner, name, id }) {
       try {
@@ -24,6 +19,11 @@ export default ({
       } catch (e) {
           console.log(e)
         }
+    }
+  },
+  getters: {
+    getIssuesItems (state) {
+      return state.data
     }
   }
 })

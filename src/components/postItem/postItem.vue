@@ -1,16 +1,16 @@
 <template>
   <div class="c-post-item" v-if="postShown">
-    <div class="user--wrapper">
+    <div class="user--wrapper" v-if="avatar">
       <avatar-user :avatar="avatar" :username="username" :is-small="true"/>
     </div>
     <div class="user__content">
       <h2>{{ name }}</h2>
       <div class="subtitle">{{ description }}</div>
       <div class="tools--wrapper">
-        <postTools :forks_count="forks_count" :stars_count="stars_count" @unFollowPost="unFollowPost(id)"/>
+        <postTools @unfollow="$emit('unfollow')" :forks_count="forks_count" :stars_count="stars_count" />
       </div>
     </div>
-    <toggleComment :comments="issues" @click="getIssue({owner, name, id})"/>
+    <toggleComment :loading="loading" :comments="issues[0]" :placeholder="placeholder" @click="getIssues({owner, name, id})"/>
     <div class="data">{{ parsingData(data) }}</div>
   </div>
 
@@ -21,6 +21,7 @@ import toggleComment from '../toggle-comment/toggle-comment.vue'
 import postTools from '../postTools'
 import avatarUser from '../avatar-user/avatar-user.vue'
 import { mapActions, mapGetters } from 'vuex'
+import { isEmpty } from 'lodash'
 
 export default {
   components: {
@@ -30,64 +31,50 @@ export default {
   },
   data () {
     return {
+      issueId: 0,
       issues: [],
-      postShown: true
+      loading: true,
+      postShown: true,
+      placeholder: false
     }
   },
-  emits: ['onUnfollowPost'],
   methods: {
-    async getIssue ({ owner, name, id }) {
-      const storeIssues = this.getIssuesItems()
-      if (this.issues.includes(storeIssues[id])) {
-
-      } else {
-        const response = await this.fetchIssues({ owner, name, id })
-        if (response.length === 0) {
+    async getIssues ({ owner, name, id }) {
+      const storeIssues = this.getIssuesItems
+        if (storeIssues[id]) {
+          this.issues[0] = storeIssues[id]
         } else {
-          this.issues.push(response)
-        }
+            const response = await this.fetchIssues({ owner, name, id })
+            this.issues[0] = response
+          }
+      if (isEmpty(this.issues[0])) {
+        this.placeholder = true
       }
-    },
-    async unFollowPost (id) {
-      // let repo
-      // let ar = this.postItems
-      // for (let i = 0; i < this.postItems.length; i++) {
-      //   repo = this.postItems.find((item) => item.id === id)
-      //   const index = this.postItems.indexOf(repo)
-      //   ar.splice(index, 1)
-      // }
-      // ar = this.postItems
-      // console.log(ar)
-      // console.log(id)
-      await this.unStarRepo(id)
+      setTimeout(() => (this.loading = false), 500)
     },
     parsingData (data) {
       data = new Date(data)
       data = data.toLocaleString('en-US', { month: 'long', day: 'numeric' })
       return data
     },
-    ...mapGetters({
-      getIssuesItems: 'issues/getIssuesItems'
-    }),
     ...mapActions({
-      unStarRepo: 'trendings/unStarRepo',
       fetchIssues: 'issues/fetchIssues'
     })
   },
+  computed: {
+    ...mapGetters({
+      getIssuesItems: 'issues/getIssuesItems'
+    })
+  },
   props: {
-    postItems: {
-      type: Array
-    },
     id: {
       type: Number
     },
     avatar: {
-      type: String,
-      required: true
+      type: String
     },
     username: {
-      type: String,
-      required: true
+      type: String
     },
     owner: {
       type: Object,

@@ -39,7 +39,6 @@ import avatarUser from '../avatar-user/avatar-user.vue'
 import placeholder from '../placeholder'
 import spinner from '../spinner'
 import * as api from '../../api'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'StoriesItem',
@@ -98,9 +97,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      fetchReadme: 'readme/fetchReadme'
-    }),
     async getReadme () {
       this.loading = true
       try {
@@ -113,7 +109,7 @@ export default {
         this.readme = '<div style="font-weight: bold">Unfortunately we could not download the content, most likely this user refused to write a readme file</div>'
       }
       setTimeout(() => (this.loading = false), 500)
-    }
+      }
   },
   mounted () {
     setTimeout(() => {

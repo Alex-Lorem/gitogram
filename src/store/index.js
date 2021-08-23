@@ -4,6 +4,7 @@ import readme from './modules/readme'
 import auth from './modules/auth'
 import starred from './modules/starred'
 import issues from './modules/issues'
+import repos from './modules/repos'
 
 export default createStore({
   getters: {
@@ -11,5 +12,5 @@ export default createStore({
       return state.trendings.data.filter((trendingsRepo) => !state.starred.data.some((starredRepo) => trendingsRepo.id === starredRepo.id))
     }
   },
-  modules: { trendings, readme, auth, starred, issues }
+  modules: { trendings, readme, auth, starred, issues, repos }
 })

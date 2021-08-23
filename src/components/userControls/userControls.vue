@@ -1,11 +1,10 @@
 <template>
   <div class="icons__wrapper">
-    <button class="icon home">
+    <button class="icon home" @click="$router.push({name: 'feeds'})">
       <icon name="home"/>
     </button>
-    <button class="account" >
-      <div v-if="loading"><img src="" alt=""> </div>
-      <avatar :avatar="avatar" :is-extra-small="true" v-else/>
+    <button class="account" @click="$router.push({name: 'account'})">
+      <avatar :avatar="avatar" :is-extra-small="true" />
     </button>
     <button class="icon exit" @click="logout">
       <icon name="exit"/>
@@ -21,9 +20,6 @@ export default {
   props: {
     avatar: {
       type: String
-    },
-    loading: {
-      type: Boolean
     }
   },
   methods: {

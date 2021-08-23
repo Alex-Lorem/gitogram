@@ -31,8 +31,7 @@ export default {
   getters: {
     getData (state) {
       return state.data
-    },
-    getRepoById: (state) => (id) => state.data.find((item) => item.id === id)
+    }
   },
   actions: {
     async fetchTrendings (context) {
@@ -43,8 +42,7 @@ export default {
         console.log(error)
       }
     },
-    async starRepo ({ commit, getters }, id) {
-      const { name, owner } = getters.getRepoById(id)
+    async starRepo ({ commit, getters }, { name, owner, id }) {
       commit('SET_FOLLOWING', {
         id,
         data: {
@@ -79,8 +77,7 @@ export default {
         })
       }
     },
-    async unStarRepo ({ commit, getters }, id) {
-      const { name, owner } = getters.getRepoById(id)
+    async unStarRepo ({ commit, getters }, { name, owner, id }) {
       commit('SET_FOLLOWING', {
         id,
         data: {

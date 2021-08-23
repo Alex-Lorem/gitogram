@@ -1,0 +1,23 @@
+.postItem--wrapper{
+  margin-top: 50px;
+  &:nth-child(1){
+    margin: 0;
+  }
+}
+.spinner{
+  position: absolute;
+  top: 45%;
+  left: 65%;
+}
+.repos-header{
+  padding-top: 40px;
+  padding-bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.repos-number{
+  color: grey;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: bold;
+}

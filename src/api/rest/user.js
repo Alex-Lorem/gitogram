@@ -4,6 +4,6 @@ export const getUserData = () => makeRequest({
   url: '/user'
   })
 
-export const gerUserRepos = () => makeRequest({
+export const getUserRepos = () => makeRequest({
   url: '/user/repos'
 })

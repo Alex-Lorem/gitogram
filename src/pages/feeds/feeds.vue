@@ -5,7 +5,6 @@
         <h1> Gitogram /</h1>
         <userControls
           :avatar="getUser.user.data.avatar_url"
-          :loading="getUserLoading.loading"
         />
       </template>
       <template #content>
@@ -21,11 +20,10 @@
     </topline>
   </div>
   <div class="container">
-    <div class="postItem--wrapper" v-for="(item, index) in postItems" :key="item.id">
+    <div class="postItem--wrapper" v-for="item in postItems" :key="item.id">
       <postItem
+        @unfollow="unFollowPost(item.name, item.owner, item.id)"
         v-bind="getPostData(item)"
-        :comments="getIssueItem(index)"
-        :postItems="postItems"
       />
     </div>
   </div>
@@ -50,17 +48,28 @@ export default {
     ...mapGetters({
       trendings: 'trendings/getData',
       getUser: 'auth/getUser',
-      postItems: 'starred/getPostItems',
-      issuesItems: 'issues/getIssuesItems',
-      getUserLoading: 'auth/getUserLoading'
+      postItems: 'starred/getPostItems'
     }),
     ...mapGetters(['getUnstarredOnly'])
   },
   methods: {
+    async unFollowPost (name, owner, id) {
+      await this.unStarRepo({ name, owner, id })
+       let repo
+       let ar = this.postItems
+      for (let i = 0; i < this.postItems.length; i++) {
+        repo = this.postItems.find((item) => item.id === id)
+        const index = this.postItems.indexOf(repo)
+        ar.splice(index, 1)
+      }
+      ar = this.postItems
+      console.log(ar)
+      console.log(id)
+    },
       ...mapActions({
         fetchTrendings: 'trendings/fetchTrendings',
-        fetchStars: 'starred/fetchStars',
-        fetchIssues: 'issues/fetchIssues'
+        unStarRepo: 'trendings/unStarRepo',
+        fetchStars: 'starred/fetchStars'
       }),
     toggle (isOpened) {
       this.shown = isOpened
@@ -83,21 +92,20 @@ export default {
         forks_count: item.forks_count,
         stars_count: item.stargazers_count
       }
-    },
-    getIssueItem (index) {
-      const content = this.issues[index]
-      return content
     }
   },
   data () {
     return {
-      issues: [],
       shown: false
     }
   },
   async created () {
-    await this.fetchTrendings()
-    await this.fetchStars()
+    if (!this.trendings.length) {
+      await this.fetchTrendings()
+    }
+    if (!this.postItems.length) {
+      await this.fetchStars()
+    }
   }
 }
 </script>

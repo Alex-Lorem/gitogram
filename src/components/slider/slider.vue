@@ -10,7 +10,7 @@
           :owner_login="item.owner.login"
           :repo="item.name"
           :following="item.following"
-          @followRepo="isFollowed(item.following, item.id)"
+          @followRepo="isFollowed(item.following, item.id, item.name, item.owner)"
         />
       </splide-slide>
     </splide >
@@ -67,12 +67,12 @@ export default {
     }
   },
   methods: {
-   async isFollowed (item, id) {
+   async isFollowed (item, id, name, owner) {
       if (item.isFollowed) {
-        await this.unStarRepo(id)
+        await this.unStarRepo({ name, owner, id })
       }
       if (!item.isFollowed) {
-        await this.starRepo(id)
+        await this.starRepo({ name, owner, id })
       }
     },
     onMounted (splide) {
