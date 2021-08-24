@@ -21,10 +21,10 @@
       </div>
       <ul class="profile-nav">
         <li class="profile-nav-item">
-          <button class="profile-nav-link" :class="[activeR]" @click="buttonShow('repos')">Repositories</button>
+          <button class="profile-nav-link" :class="[activeRepos]" @click="buttonShow('repos')">Repositories</button>
         </li>
         <li class="profile-nav-item">
-          <button class="profile-nav-link" :class="[activeS]" @click="buttonShow('starred')">Starred</button>
+          <button class="profile-nav-link" :class="[activeStars]" @click="buttonShow('starred')">Starred</button>
         </li>
       </ul>
     </div>
@@ -40,11 +40,12 @@
 
 <script>
 import topline from '../../components/topline'
-import { mapActions, mapGetters } from 'vuex'
+import { useStore } from 'vuex'
 import userControls from '../../components/userControls'
 import repos from '../../components/profileRepos'
 import profileUser from '../../components/profileUser'
 import profileFollowing from '../../components/profileFollowing'
+import { ref, computed } from 'vue'
 
 export default {
   name: 'account',
@@ -55,51 +56,54 @@ export default {
     topline,
     userControls
   },
-  data () {
-    return {
-      activeR: 'active',
-      activeS: '',
-      showRepos: true,
-      showStarred: false
-    }
-  },
-  computed: {
-    ...mapGetters({
-      getUser: 'auth/getUser',
-      getPosts: 'starred/getPostItems'
-    })
-  },
-  methods: {
-    buttonShow (arg) {
+  setup () {
+    const { dispatch, getters } = useStore()
+    const activeRepos = ref('active')
+    const activeStars = ref('')
+    const showRepos = ref(true)
+    const showStarred = ref(false)
+    const getUser = computed(() => getters['auth/getUser'])
+    const getPosts = computed(() => getters['starred/getPostItems'])
+    const buttonShow = (arg) => {
       if (arg === 'repos') {
-        this.showStarred = false
-        this.showRepos = true
-        this.activeR = 'active'
-        this.activeS = ''
+        showStarred.value = false
+        showRepos.value = true
+        activeRepos.value = 'active'
+        activeStars.value = ''
       }
       if (arg === 'starred') {
-        this.showRepos = false
-        this.showStarred = true
-        this.activeS = 'active'
-        this.activeR = ''
+        showRepos.value = false
+        showStarred.value = true
+        activeStars.value = 'active'
+        activeRepos.value = ''
       }
-    },
-    ...mapActions({
-      fetchStarred: 'starred/fetchStars'
-    }),
-    getUserInfo (getUser) {
+    }
+
+    const getUserInfo = (getUser) => {
       return {
         avatar: getUser.user.data.avatar_url,
         repos: getUser.user.data.public_repos,
         name: getUser.user.data.name,
         login: getUser.user.data.login,
-        starred: this.getPosts.length
+        starred: getPosts.value.length
       }
     }
-  },
-  async created () {
-    if (!this.getPosts.length) {
-      await this.fetchStarred()
+    const request = async () => {
+      await dispatch('starred/fetchStars')
+    }
+    if (!getPosts.value.length) {
+      request()
+    }
+    return {
+      activeRepos,
+      activeStars,
+      showRepos,
+      showStarred,
+      buttonShow,
+      getUser,
+      getPosts,
+      getUserInfo,
+      request
     }
   }
 }

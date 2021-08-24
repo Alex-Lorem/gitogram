@@ -88,6 +88,7 @@ export default {
       })
       try {
         await api.starred.unStarRepo({ repo: name, owner: owner.login })
+        console.log(true)
         commit('SET_FOLLOWING', {
           id,
           data: {

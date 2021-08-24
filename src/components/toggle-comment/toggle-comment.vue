@@ -22,7 +22,7 @@
 <script>
 import comment from '../comment/comment.vue'
 import toggler from '../toggler/toggler.vue'
-
+import { ref } from 'vue'
 export default {
   name: 'toggle-comment',
   components: {
@@ -40,14 +40,14 @@ export default {
       type: Boolean
     }
   },
-  data () {
-    return {
-      shown: false
+  setup (props, { emit }) {
+    const shown = ref(false)
+    const toggle = (isOpened) => {
+      shown.value = isOpened
     }
-  },
-  methods: {
-    toggle (isOpened) {
-      this.shown = isOpened
+    return {
+      shown,
+      toggle
     }
   }
 }

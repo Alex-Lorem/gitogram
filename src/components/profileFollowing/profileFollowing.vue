@@ -26,15 +26,11 @@
 <script>
 import follow from '../follow'
 import avatar from '../avatar'
-import { mapActions } from 'vuex'
+import { useStore } from 'vuex'
+import { ref } from 'vue'
 
 export default {
   name: 'profileFollowing',
-  data () {
-    return {
-      array: []
-    }
-  },
   components: {
     follow,
     avatar
@@ -50,25 +46,26 @@ export default {
       type: Boolean
     }
   },
-  methods: {
-    async unFollow (id) {
-      for (let i = 0; i < this.array.length; i++) {
-        if (id === this.array[i].id) {
-          const name = this.array[i].name
-          const owner = this.array[i].owner
-          const id = this.array[i].id
-          await this.unStarRepo({ name, owner, id })
-          const index = this.getPosts.indexOf(this.getPosts[i])
-          this.array.splice(index, index + 1)
+  setup (props) {
+    const array = ref(props.getPosts)
+    const { dispatch } = useStore()
+
+    const unFollow = async (id) => {
+      for (let i = 0; i < array.value.length; i++) {
+        if (id === array.value[i].id) {
+          const name = ref(array.value[i].name)
+          const owner = ref(array.value[i].owner)
+          const id = ref(array.value[i].id)
+          await dispatch('trendings/unStarRepo', { name: name.value, owner: owner.value, id: id.value })
+          const index = ref(array.value.indexOf(array.value[i]))
+          array.value.splice(index.value, index.value + 1)
         }
       }
-    },
-    ...mapActions({
-      unStarRepo: 'trendings/unStarRepo'
-    })
-  },
-  async created () {
-    this.array = this.getPosts
+    }
+    return {
+      array,
+      unFollow
+    }
   }
 }
 </script>

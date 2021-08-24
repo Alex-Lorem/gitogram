@@ -19,8 +19,9 @@
 
 <script>
 import postItem from '../postItem'
-import { mapActions, mapGetters } from 'vuex'
+import { useStore } from 'vuex'
 import spinner from '../spinner'
+import { computed, ref } from 'vue'
 
 export default {
   name: 'accountRepos',
@@ -28,26 +29,18 @@ export default {
     spinner,
     postItem
   },
-  data () {
-    return {
-      loading: true
-    }
-  },
   props: {
     owner: {
       type: Object
     }
   },
-  computed: {
-    ...mapGetters({
-        ownerItems: 'repos/getUserRepos'
-    })
-  },
-  methods: {
-    ...mapActions({
-          fetchRepos: 'repos/fetchRepos'
-    }),
-    getPostData (item) {
+   setup (props) {
+    const { dispatch, getters } = useStore()
+    const ownerItems = computed(() => getters['repos/getUserRepos'])
+    const owner = ref(props.owner)
+     const loading = ref(true)
+
+     const getPostData = (item) => {
       return {
         id: item.id,
         name: item.name,
@@ -58,14 +51,23 @@ export default {
         stars_count: item.stargazers_count
       }
     }
-  },
-  async created () {
-    if (!this.ownerItems.length) {
-      await this.fetchRepos(this.owner)
+     const request = async () => {
+      await dispatch('repos/fetchRepos', { owner })
+     }
+     if (!ownerItems.value.length) {
+       request()
+     }
+
+     setTimeout(() => {
+       loading.value = false
+     }, 500)
+
+    return {
+      getPostData,
+      ownerItems,
+      loading,
+      request
     }
-    setTimeout(() => {
-      this.loading = false
-    }, 500)
   }
 }
 </script>

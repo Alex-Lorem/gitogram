@@ -31,7 +31,6 @@ export default {
   },
   data () {
     return {
-      issueId: 0,
       issues: [],
       loading: true,
       postShown: true,

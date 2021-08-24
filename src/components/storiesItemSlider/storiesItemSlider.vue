@@ -38,7 +38,7 @@ import follow from '../follow'
 import avatarUser from '../avatar-user/avatar-user.vue'
 import placeholder from '../placeholder'
 import spinner from '../spinner'
-import * as api from '../../api'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'StoriesItem',
@@ -86,8 +86,7 @@ export default {
       type: String
     },
     id: {
-      type: Number,
-      required: true
+      type: Number
     },
     owner_login: {
       type: String
@@ -96,20 +95,32 @@ export default {
       type: String
     }
   },
+  computed: {
+    ...mapGetters({
+        getUserReadme: 'readme/getReadme'
+    })
+  },
   methods: {
+    ...mapActions({
+      fetchReadme: 'readme/fetchReadme'
+    }),
     async getReadme () {
       this.loading = true
-      try {
-        const { data } = await api.readme.getReadme({
-          owner: this.owner_login,
-          name: this.repo
-        })
-        this.readme = data
-      } catch (error) {
-        this.readme = '<div style="font-weight: bold">Unfortunately we could not download the content, most likely this user refused to write a readme file</div>'
-      }
+          if (this.getUserReadme[this.id]) {
+            this.readme = this.getUserReadme[this.id]
+          } else {
+              try {
+                const data = await this.fetchReadme({ owner: this.owner_login, name: this.repo, id: this.id })
+                this.readme = data
+              } catch (error) {
+                console.log(error)
+                this.readme = '<div style="font-weight: bold">Unfortunately we could not download the content, most likely this user refused to write a readme file</div>'
+              }
+            }
+
       setTimeout(() => (this.loading = false), 500)
       }
+
   },
   mounted () {
     setTimeout(() => {
