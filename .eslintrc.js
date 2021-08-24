@@ -16,14 +16,13 @@ module.exports = {
     'indent': 'off'
   },
   overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
-    }
+    Object.assign(
+      {
+        files: ['**/*.test.js'],
+        env: { jest: true },
+        plugins: ['jest']
+      },
+      require('eslint-plugin-jest').configs.recommended
+    )
   ]
 }

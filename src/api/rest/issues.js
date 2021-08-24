@@ -8,4 +8,3 @@ export const getIssues = ({ owner, repo }) => {
     url: `/repos/${owner}/${repo}/issues?${params}`
   })
 }
-// https://api.github.com/users/USERNAME/repos

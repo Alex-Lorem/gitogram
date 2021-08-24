@@ -1,11 +1,10 @@
 
 import { makeRequest } from '../requests'
 
-export const getStarredRepos = ({ limit }) => {
+export const getStarredRepos = () => {
   const params = new URLSearchParams()
-  if (limit) {
-    params.append('per_page', limit)
-  }
+  const date = new Date().getTime()
+  params.append('_', date)
 
   return makeRequest({
     url: `/user/starred?${params}`

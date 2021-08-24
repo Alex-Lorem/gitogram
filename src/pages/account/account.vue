@@ -105,6 +105,9 @@ export default {
       getUserInfo,
       request
     }
+  },
+  mounted () {
+    document.body.classList.add('body-profile')
   }
 }
 </script>

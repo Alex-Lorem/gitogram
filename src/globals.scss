@@ -15,7 +15,6 @@ html{
   font-size: $baseFont;
   font-family: $baseFamily, "sans-serif";
   color: $baseColor;
-  overflow-x: hidden;
 
   @include phones{
     font-size: $baseFont - 1px;
@@ -55,4 +54,7 @@ button{
 }
 .icon{
   cursor: pointer;
+}
+.body-profile{
+  overflow-y: scroll;
 }

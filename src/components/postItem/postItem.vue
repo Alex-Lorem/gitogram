@@ -10,7 +10,7 @@
         <postTools @unfollow="$emit('unfollow')" :forks_count="forks_count" :stars_count="stars_count" />
       </div>
     </div>
-    <toggleComment :loading="loading" :comments="issues[0]" :placeholder="placeholder" @click="getIssues({owner, name, id})"/>
+    <toggleComment :loading="loading" :comments="issues[0]" :placeholder="placeholder" @loadIssues="getIssues({owner, name, id})"/>
     <div class="data">{{ parsingData(data) }}</div>
   </div>
 

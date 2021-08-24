@@ -1,3 +1,5 @@
+import * as api from '../../api'
+
 export default ({
   namespaced: true,
   state: {
@@ -11,13 +13,9 @@ export default ({
   actions: {
     async fetchStars (context) {
       try {
-        const response = await fetch('https://api.github.com/user/starred', {
-          headers: {
-            Authorization: `token ${localStorage.getItem('token')}`
-          }
-        })
-        const user = await response.json()
-        context.commit('SET_STARS', user)
+        const { data } = await api.starred.getStarredRepos()
+
+        context.commit('SET_STARS', data)
       } catch (e) {
         console.log(e)
       }

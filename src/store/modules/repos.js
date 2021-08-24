@@ -11,7 +11,7 @@ export default ({
     }
   },
   actions: {
-    async fetchRepos (store, owner) {
+    async fetchRepos (store) {
       try {
         const { data } = await api.user.getUserRepos()
         store.commit('SET_REPOS', data)

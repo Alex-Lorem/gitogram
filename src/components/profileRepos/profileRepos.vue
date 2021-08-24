@@ -1,6 +1,8 @@
 <template>
-  <div class="spinner" v-if="loading">
-  <spinner :color="'green'"/>
+  <div class="spinner-container" v-if="loading">
+    <div class="spinner" >
+      <spinner :color="'green'"/>
+    </div>
   </div>
   <div v-else>
   <div class="repos-header" >

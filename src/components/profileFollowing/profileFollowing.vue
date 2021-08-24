@@ -1,4 +1,10 @@
 <template>
+  <div class="spinner-container" v-if="loading">
+    <div class="spinner" >
+      <spinner :color="'green'"/>
+    </div>
+  </div>
+  <div v-else>
   <div class="following-header">
     <h2 class="profile-title">Starred</h2>
     <div class="following-number">
@@ -21,6 +27,7 @@
       </follow>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -28,11 +35,13 @@ import follow from '../follow'
 import avatar from '../avatar'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+import spinner from '../spinner'
 
 export default {
   name: 'profileFollowing',
   components: {
     follow,
+    spinner,
     avatar
   },
   props: {
@@ -49,7 +58,7 @@ export default {
   setup (props) {
     const array = ref(props.getPosts)
     const { dispatch } = useStore()
-
+    const loading = ref(true)
     const unFollow = async (id) => {
       for (let i = 0; i < array.value.length; i++) {
         if (id === array.value[i].id) {
@@ -62,9 +71,13 @@ export default {
         }
       }
     }
+    setTimeout(() => {
+      loading.value = false
+    }, 500)
     return {
       array,
-      unFollow
+      unFollow,
+      loading
     }
   }
 }

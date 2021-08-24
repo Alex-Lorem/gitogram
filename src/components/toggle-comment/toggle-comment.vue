@@ -1,6 +1,8 @@
 <template>
   <div>
-  <toggler @onToggle="toggle" />
+    <div class="toggler">
+      <toggler @onToggle="toggle" />
+    </div>
   <ul class="comments"  v-if="shown" >
     <div class="loader" v-if="loading">
       <span class="loader-stick"></span>
@@ -22,13 +24,14 @@
 <script>
 import comment from '../comment/comment.vue'
 import toggler from '../toggler/toggler.vue'
-import { ref } from 'vue'
+
 export default {
   name: 'toggle-comment',
   components: {
     comment,
     toggler
   },
+  emits: ['loadIssues'],
   props: {
     loading: {
       type: Boolean
@@ -40,14 +43,15 @@ export default {
       type: Boolean
     }
   },
-  setup (props, { emit }) {
-    const shown = ref(false)
-    const toggle = (isOpened) => {
-      shown.value = isOpened
-    }
+  data () {
     return {
-      shown,
-      toggle
+      shown: false
+    }
+  },
+  methods: {
+    toggle (isOpened) {
+      this.shown = isOpened
+      this.$emit('loadIssues')
     }
   }
 }

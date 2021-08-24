@@ -4,12 +4,21 @@
   align-items: center;
   margin-bottom: 30px;
 }
+.spinner-container{
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
 .following-header{
   padding: 40px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  h2{
+    padding: 0;
+  }
 }
-.follow-button {
+.follow-button{
   width: 115px;
   height: 42px;
   background: #31AE54;
