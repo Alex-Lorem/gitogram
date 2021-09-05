@@ -79,5 +79,34 @@
   }
 }
 .splide__track{
-  overflow: unset;
+  overflow: hidden;
+}
+
+.stories__prev{
+  left: -3.5rem;
+  transform: rotate(180deg);
+  top: 35px;
+  &:hover{
+    svg{
+      fill: #A6328D;
+
+    }
+  }
+  @media(max-width: 650px){
+    left: -2.7rem;
+  }
+}
+.stories__next{
+  right: -3.5rem;
+  transform: none;
+  top: 35px;
+  &:hover{
+    svg{
+      fill: #A6328D;
+
+    }
+  }
+  @media(max-width: 650px){
+    right: -3rem;
+  }
 }

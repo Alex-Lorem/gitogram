@@ -1,4 +1,5 @@
 <template>
+  <div>
   <button class="c-story-item" @click="$emit('onPress')">
     <button class="avatar">
       <avatar
@@ -8,6 +9,7 @@
     </button>
     <div class="username">{{username}}</div>
   </button>
+  </div>
 </template>
 
 <script>
