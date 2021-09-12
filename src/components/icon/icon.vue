@@ -5,7 +5,6 @@
 <script>
 import * as icons from './variations'
 
-
 export default {
   name: 'icon',
   components: { ...icons },
